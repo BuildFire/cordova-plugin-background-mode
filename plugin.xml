@@ -70,12 +70,16 @@
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
+            <service android:name="de.appplant.cordova.plugin.background.ForegroundService" 
+            android:foregroundServiceType="location|dataSync" />
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WAKE_LOCK" />
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+            <!-- permissions needed for android +14 because we need to specify the type of foreground service type when stating a foreground service -->
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
         </config-file>
 
         <source-file
