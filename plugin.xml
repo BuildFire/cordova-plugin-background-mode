@@ -77,7 +77,7 @@
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WAKE_LOCK" />
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-            <!-- permissions needed for android +14 because we need to specify the type of foreground service type when stating a foreground service -->
+            <!-- permission needed for android +14 because we need to specify the type of foreground service when stating a foreground service -->
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
         </config-file>
 
