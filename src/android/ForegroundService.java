@@ -41,10 +41,12 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
+import static android.Manifest.permission.ACCESS_BACKGROUND_LOCATION;
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 
 /**
  * Puts the service in a foreground state, where the system considers it to be
@@ -159,12 +161,17 @@ public class ForegroundService extends Service {
         if (!isSilent) {
             try {
                 if (Build.VERSION.SDK_INT >= 29) {
-                    startForeground(NOTIFICATION_ID, makeNotification(settings), FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+                    if(PermissionChecker.checkSelfPermission(this, ACCESS_BACKGROUND_LOCATION) == PermissionChecker.PERMISSION_GRANTED) {
+                        startForeground(NOTIFICATION_ID, makeNotification(settings), FOREGROUND_SERVICE_TYPE_LOCATION);
+                        Log.i("FOREGROUND SERVICE", "Background location permission granted!!");
+                    } else {
+                        Log.w("FOREGROUND SERVICE", "Background location permission not granted, unable to start foreground service");
+                    }
                 } else {
                     startForeground(NOTIFICATION_ID, makeNotification());
                 }
             } catch (Exception e) {
-                Log.i("FOREGROUND ERROR", e.toString());
+                Log.e("FOREGROUND SERVICE", e.toString());
             }
         }
 
