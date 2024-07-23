@@ -42,7 +42,6 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
-import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 import androidx.core.content.ContextCompat;
@@ -160,18 +159,12 @@ public class ForegroundService extends Service {
         if (!isSilent) {
             try {
                 if (Build.VERSION.SDK_INT >= 29) {
-                    try {
-                        startForeground(NOTIFICATION_ID, makeNotification(settings), FOREGROUND_SERVICE_TYPE_LOCATION);
-                    } catch (Exception e) {
-                        Log.i("FOREGROUND ERROR", e.getMessage() + " - " + e.getCause() + " - " + e.getStackTrace());
-                        // in this case we don't have location always permission, so we ask for a data sync foreground service
-                        startForeground(NOTIFICATION_ID, makeNotification(settings), FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-                    }
+                    startForeground(NOTIFICATION_ID, makeNotification(settings), FOREGROUND_SERVICE_TYPE_DATA_SYNC);
                 } else {
                     startForeground(NOTIFICATION_ID, makeNotification());
                 }
             } catch (Exception e) {
-                Log.i("FOREGROUND ERROR", e.getMessage() + " - " + e.getCause() + " - " + e.getStackTrace());
+                Log.i("FOREGROUND ERROR", e.toString());
             }
         }
 
