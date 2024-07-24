@@ -41,7 +41,7 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK;
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 import androidx.core.content.ContextCompat;
@@ -159,7 +159,7 @@ public class ForegroundService extends Service {
         if (!isSilent) {
             try {
                 if (Build.VERSION.SDK_INT >= 29) {
-                    startForeground(NOTIFICATION_ID, makeNotification(settings), FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+                    startForeground(NOTIFICATION_ID, makeNotification(settings), FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
                 } else {
                     startForeground(NOTIFICATION_ID, makeNotification());
                 }
